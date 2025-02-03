@@ -1,0 +1,43 @@
+/*
+For testing gRPC application only, these codes may not be suitable
+for full production.Does not promise any liability and guarantee
+
+Copyright All right reserved Emre Kayal 2023
+*/
+
+syntax = "proto3";
+
+package test;
+
+// Test python rpc service defination
+service Test {
+    // Unary
+    rpc U_rpc (hreq) returns (hrep) {}
+
+    // Server Streaming
+    rpc SS_rpc (hreq) returns (stream hrep) {}
+
+    // Client Streaming
+    rpc CS_rpc (stream hreq) returns (DelayedReply) {}
+
+    // Bi-directional Streaming
+    rpc M_rpc (stream msc) returns (stream msc) {}
+}
+
+message hreq {
+    string str = 1;
+}
+
+message hrep {
+    string msg = 1;
+}
+
+message DelayedReply {
+    string msg = 1;
+    repeated hreq request = 2;
+}
+
+message msc {
+    bytes data = 1;
+    optional double tt = 2;
+}
